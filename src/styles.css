@@ -33,6 +33,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
+  overflow: hidden;
 }
 
 button {
@@ -51,8 +52,12 @@ button:focus-visible {
 }
 
 .page-shell {
-  min-height: 100vh;
-  padding: clamp(1rem, 3vw, 2.5rem) 1rem 1.5rem;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: 100%;
+  height: 100dvh;
+  padding: clamp(0.5rem, 1.5vh, 1rem) 1rem 0.5rem;
+  overflow: hidden;
   background:
     radial-gradient(
       circle at 14% 12%,
@@ -73,7 +78,7 @@ button:focus-visible {
 
 .game-header {
   max-width: 66rem;
-  margin: 0 auto 1.25rem;
+  margin: 0 auto clamp(0.35rem, 1vh, 0.75rem);
   text-align: center;
 }
 
@@ -91,7 +96,7 @@ button:focus-visible {
   margin: 0 auto;
   color: var(--graphite);
   font-family: 'Chalkboard SE', 'Comic Sans MS', cursive;
-  font-size: clamp(2rem, 7vw, 4.5rem);
+  font-size: clamp(1.75rem, 5vh, 3.5rem);
   font-weight: 700;
   line-height: 0.98;
   letter-spacing: -0.055em;
@@ -100,7 +105,7 @@ button:focus-visible {
 
 .game-header p {
   max-width: 42rem;
-  margin: 0.75rem auto 0;
+  margin: 0.3rem auto 0;
   color: var(--pencil);
   font-size: clamp(0.95rem, 2vw, 1.08rem);
   line-height: 1.5;
@@ -108,10 +113,12 @@ button:focus-visible {
 
 .game-layout {
   display: grid;
+  width: 100%;
+  min-height: 0;
   max-width: 66rem;
   margin: 0 auto;
-  gap: 1.25rem;
-  align-items: start;
+  gap: clamp(0.5rem, 1.5vw, 1.25rem);
+  align-items: stretch;
 }
 
 .play-area,
@@ -130,7 +137,11 @@ button:focus-visible {
 }
 
 .play-area {
-  padding: clamp(1rem, 4vw, 2rem);
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  min-height: 0;
+  align-content: center;
+  padding: clamp(0.65rem, 1.5vh, 1rem);
 }
 
 .play-area::before,
@@ -230,15 +241,22 @@ button:focus-visible {
 
 .board-wrap {
   position: relative;
-  width: min(100%, 35rem);
+  width: min(100%, calc(100dvh - 23.5rem));
+  height: auto;
+  min-width: 0;
+  min-height: 0;
   margin: 0 auto;
+  aspect-ratio: 1;
   isolation: isolate;
 }
 
 .game-board {
   display: grid;
   overflow: hidden;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-rows: repeat(8, minmax(0, 1fr));
+  width: 100%;
+  height: 100%;
   aspect-ratio: 1;
   border: 3px solid var(--graphite);
   border-radius: 0.25rem 0.55rem 0.3rem 0.45rem;
@@ -251,6 +269,8 @@ button:focus-visible {
   position: relative;
   display: grid;
   min-width: 0;
+  min-height: 0;
+  overflow: hidden;
   cursor: pointer;
   place-items: center;
   border: 0;
@@ -281,9 +301,10 @@ button:focus-visible {
   position: relative;
   z-index: 1;
   font-family: 'Chalkboard SE', 'Comic Sans MS', cursive;
-  font-size: clamp(1rem, 5.8vw, 2.5rem);
+  font-size: clamp(1rem, 5.8vmin, 2.5rem);
   font-weight: 700;
   line-height: 1;
+  contain: layout paint;
 }
 
 .cell-mark-x {
@@ -331,10 +352,10 @@ button:focus-visible {
 
 .game-controls {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
-  gap: 0.75rem;
-  margin-top: 1.25rem;
+  gap: 0.6rem;
+  margin-top: clamp(0.5rem, 1vh, 0.8rem);
 }
 
 .paper-button {
@@ -394,7 +415,7 @@ button:focus-visible {
 
 footer {
   max-width: 66rem;
-  margin: 1.25rem auto 0;
+  margin: 0.35rem auto 0;
   color: #667780;
   font-size: 0.8rem;
   text-align: center;
@@ -403,43 +424,105 @@ footer {
 @media (min-width: 58rem) {
   .game-layout {
     grid-template-columns: minmax(0, 2.15fr) minmax(15rem, 0.85fr);
-    gap: 1.75rem;
   }
 
   .rules-card {
-    position: sticky;
-    top: 1.25rem;
+    align-self: center;
   }
 }
 
-@media (max-width: 28rem) {
+@media (max-width: 57.99rem) {
+  .game-layout {
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .rules-card {
+    padding: 0.45rem 0.75rem 0.45rem 2rem;
+    transform: none;
+  }
+
+  .rules-card h2 {
+    margin: 0 0 0.2rem;
+    font-size: clamp(1rem, 2.5vh, 1.3rem);
+  }
+
+  .rules-card ul {
+    grid-template-columns: repeat(5, 1fr);
+    padding-left: 0;
+    gap: 0.55rem;
+    font-size: clamp(0.58rem, 1.45vh, 0.75rem);
+    line-height: 1.25;
+    list-style-position: inside;
+  }
+
+  footer {
+    display: none;
+  }
+}
+
+@media (max-width: 40rem) {
   .page-shell {
-    padding-inline: 0.55rem;
+    padding-inline: 0.45rem;
+  }
+
+  .title-doodle {
+    margin: 0;
+    font-size: 0.75rem;
+  }
+
+  .game-header h1 {
+    font-size: clamp(1.45rem, 7vw, 2.25rem);
+  }
+
+  .game-header p {
+    font-size: clamp(0.72rem, 3.4vw, 0.9rem);
   }
 
   .play-area {
-    padding-inline: 0.7rem;
+    padding-inline: 0.65rem;
   }
 
   .play-area::before {
     display: none;
   }
 
+  .scoreboard {
+    margin-bottom: 0.15rem;
+  }
+
   .score-card {
-    padding-inline: 0.35rem;
+    padding: 0.2rem 0.35rem;
   }
 
   .score-label {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
   }
 
-  .game-controls {
-    display: grid;
-    grid-template-columns: 1fr;
+  .score-mark,
+  .score-number {
+    font-size: 1.25rem;
+  }
+
+  .status-note {
+    min-height: 1.8rem;
+    margin-bottom: 0.2rem;
+    padding: 0.2rem 0.35rem;
+    font-size: 0.78rem;
   }
 
   .paper-button {
-    width: 100%;
+    min-height: 2.25rem;
+    padding: 0.35rem 0.55rem;
+    font-size: 0.72rem;
+  }
+
+  .rules-card ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.15rem 0.65rem;
+  }
+
+  .rules-card li:last-child {
+    grid-column: 1 / -1;
   }
 }
 
