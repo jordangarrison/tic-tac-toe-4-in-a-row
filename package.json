@@ -1,0 +1,35 @@
+{
+  "name": "tic-tac-toe-4-in-a-row",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "format": "oxfmt",
+    "test": "vitest run",
+    "lint": "oxlint src"
+  },
+  "dependencies": {
+    "@effect/platform-browser": "4.0.0-rc.115",
+    "@foldkit/ui": "0.160.0",
+    "clsx": "^2.1.1",
+    "effect": "4.0.0-rc.115",
+    "foldkit": "0.160.0"
+  },
+  "devDependencies": {
+    "@foldkit/devtools": "0.160.0",
+    "@foldkit/devtools-mcp": "0.20.0",
+    "@foldkit/oxlint-plugin": "0.13.0",
+    "@foldkit/vite-plugin": "0.22.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "happy-dom": "^20.11.13",
+    "oxfmt": "^0.66.0",
+    "oxlint": "^1.80.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2",
+    "vitest": "^5.0.0"
+  }
+}
