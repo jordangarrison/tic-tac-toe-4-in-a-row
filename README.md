@@ -75,3 +75,27 @@ Example NixOS configuration:
 ```
 
 The service needs no secrets or database for v0.1.
+
+### Existing nginx configuration
+
+The module does not require its built-in nginx support. An existing global nginx configuration can run the service privately and proxy to it:
+
+```nix
+{
+  services.tic-tac-toe-4-in-a-row = {
+    enable = true;
+    package = inputs.tic-tac-toe-4-in-a-row.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    listenAddress = "127.0.0.1";
+    port = 3000;
+    nginx.enable = false;
+  };
+
+  services.nginx.virtualHosts."four.example.com" = {
+    forceSSL = true;
+    useACMEHost = "four.example.com";
+    locations."/".proxyPass = "http://127.0.0.1:3000";
+  };
+}
+```
+
+The package contains both the built SPA and Effect/Bun server, so nginx only needs to proxy the selected hostname to the configured local port.
