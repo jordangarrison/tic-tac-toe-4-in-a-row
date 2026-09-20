@@ -64,6 +64,14 @@ const contentTypeHeaders = (pathname: string): HeadersInit => {
     return { 'content-type': 'image/svg+xml' }
   }
 
+  if (pathname.endsWith('.png')) {
+    return { 'content-type': 'image/png' }
+  }
+
+  if (pathname.endsWith('.webmanifest')) {
+    return { 'content-type': 'application/manifest+json' }
+  }
+
   return {}
 }
 

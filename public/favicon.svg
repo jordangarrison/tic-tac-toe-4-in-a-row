@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <rect width="180" height="180" fill="#d9e5e8" />
+  <rect x="14" y="14" width="152" height="152" rx="28" fill="#fffdf4" />
+  <path
+    d="M90 28v124M28 90h124"
+    fill="none"
+    stroke="#b9d5df"
+    stroke-width="4"
+    stroke-linecap="round"
+  />
+  <path
+    d="M42 42l36 36M78 42L42 78"
+    fill="none"
+    stroke="#26628c"
+    stroke-width="10"
+    stroke-linecap="round"
+  />
+  <circle
+    cx="128"
+    cy="60"
+    r="22"
+    fill="none"
+    stroke="#bd4b3f"
+    stroke-width="10"
+  />
+  <circle
+    cx="52"
+    cy="128"
+    r="22"
+    fill="none"
+    stroke="#bd4b3f"
+    stroke-width="10"
+  />
+  <path
+    d="M102 102l36 36M138 102l-36 36"
+    fill="none"
+    stroke="#26628c"
+    stroke-width="10"
+    stroke-linecap="round"
+  />
+</svg>

@@ -1,0 +1,23 @@
+{
+  "name": "Tic Tac Toe: 4 in a Row",
+  "short_name": "4 in a Row",
+  "description": "A two-player 8×8 game where every exact row of four scores a point.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#d9e5e8",
+  "theme_color": "#d9e5e8",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
