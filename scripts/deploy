@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $# -ne 1 ]]; then
+  printf 'usage: %s <hostname>\n' "$0" >&2
+  exit 2
+fi
+
+readonly deploy_host="$1"
+readonly nix_config_dir="$HOME/dev/jordangarrison/nix-config"
+readonly deploy_command='cd "$HOME/dev/jordangarrison/nix-config" && nix flake update tic-tac-toe-4-in-a-row && nh os test . --no-nom'
+
+if [[ $(hostname -s) == "$deploy_host" ]]; then
+  cd "$nix_config_dir"
+  nix flake update tic-tac-toe-4-in-a-row
+  nh os test . --no-nom
+else
+  exec ssh "$deploy_host" "$deploy_command"
+fi

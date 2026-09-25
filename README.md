@@ -76,6 +76,19 @@ Example NixOS configuration:
 
 The service needs no secrets or database for v0.1.
 
+### Deploying
+
+Push the game changes, then run:
+
+```bash
+bun run deploy -- <hostname>
+```
+
+When run on the deployment host, the script updates the
+`tic-tac-toe-4-in-a-row` input in `~/dev/jordangarrison/nix-config` and runs
+`nh os test . --no-nom`. From another machine, it runs the same commands on the
+provided host over SSH.
+
 ### Existing nginx configuration
 
 The module does not require its built-in nginx support. An existing global nginx configuration can run the service privately and proxy to it:

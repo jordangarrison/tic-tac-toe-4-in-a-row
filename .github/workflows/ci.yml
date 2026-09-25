@@ -26,6 +26,7 @@ jobs:
           bun run lint &&
           bun run typecheck &&
           bun run test &&
+          bun run test:deploy &&
           bun run build"
 
   nix:

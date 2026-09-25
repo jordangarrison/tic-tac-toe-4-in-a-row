@@ -6,12 +6,14 @@
     "dev": "vite",
     "dev:server": "STATIC_ROOT=dist bun --watch server/index.ts",
     "build": "vite build && bun build server/index.ts --target bun --outdir dist/server",
+    "deploy": "scripts/deploy",
     "serve": "bun dist/server/index.js",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "test": "vitest run",
+    "test:deploy": "tests/deploy.sh",
     "lint": "oxlint src server"
   },
   "dependencies": {
