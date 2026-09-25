@@ -2,7 +2,7 @@
 
 ## Goal
 
-Two players, X and O, fill an 8×8 board. Players earn points throughout the game by completing straight, contiguous runs of exactly four of their own marks. The player with the higher score after all 64 cells are occupied wins.
+Two players, X and O, fill an 8×8 board. Players earn points throughout the game by completing straight groups of exactly four of their own marks. Scored groups do not overlap, but they can sit directly end to end. The player with the higher score after all 64 cells are occupied wins.
 
 ## Turn rules
 
@@ -21,17 +21,17 @@ The four independently scored axes are:
 - diagonal down-right / up-left
 - diagonal up-right / down-left
 
-For each axis, find the complete contiguous run of the current player's marks containing the newly placed mark.
+For each axis, find the complete contiguous run of the current player's unscored marks containing the newly placed mark. The board edge, an opponent's mark, or a cell in one of that player's previously scored rows on the same axis ends the run.
 
-| Complete run length | Points on that axis |
+| Unscored run length | Points on that axis |
 | ------------------- | ------------------: |
 | 0–3                 |                   0 |
 | exactly 4           |                   1 |
 | 5–8                 |                   0 |
 
-A move can therefore earn between 0 and 4 points. Lines may cross, and a mark from an earlier scoring line may participate in a later line on another axis.
+A move can therefore earn between 0 and 4 points. A scored group starts a fresh count beyond either end, allowing two groups of four to score end to end. Lines may cross, and a mark from an earlier scoring line may participate in a later line on another axis.
 
-Scoring is event-based. A point already earned is never removed merely because a later move extends that run to five. The extending move earns no new point on that axis. Likewise, filling a gap that joins two groups into a contiguous run of five or more earns no point on that axis; overlapping windows of four are never counted.
+Scoring is event-based. A point already earned is never removed when later marks are placed beside its row. The next three adjacent marks earn no point, but completing a fresh fourth mark does. Filling a gap that joins two unscored groups into a run of five or more earns no point on that axis, and overlapping groups of four are never counted.
 
 Every scored row records its player, direction, four coordinates, and turn number so the interface can keep its line visible.
 

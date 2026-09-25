@@ -124,40 +124,55 @@ const isPlayerAt = (
     onSome: occupant => occupant === player,
   })
 
-const collectFrom = (
-  board: ReadonlyArray<Option.Option<Player>>,
-  origin: Coordinate,
+const sameCoordinate = (left: Coordinate, right: Coordinate): boolean =>
+  left.row === right.row && left.column === right.column
+
+const isPreviouslyScoredOnAxis = (
+  scoredRows: ReadonlyArray<ScoredRow>,
+  cell: Coordinate,
   player: Player,
+  direction: Direction,
+): boolean =>
+  scoredRows.some(
+    row =>
+      row.player === player &&
+      row.direction === direction &&
+      row.cells.some(scoredCell => sameCoordinate(scoredCell, cell)),
+  )
+
+const collectFrom = (
+  origin: Coordinate,
   rowStep: number,
   columnStep: number,
+  belongsToRun: (cell: Coordinate) => boolean,
 ): ReadonlyArray<Coordinate> => {
   const next = Coordinate.make({
     row: origin.row + rowStep,
     column: origin.column + columnStep,
   })
 
-  return isPlayerAt(board, next, player)
-    ? [next, ...collectFrom(board, next, player, rowStep, columnStep)]
+  return belongsToRun(next)
+    ? [next, ...collectFrom(next, rowStep, columnStep, belongsToRun)]
     : []
 }
 
 const contiguousRun = (
-  board: ReadonlyArray<Option.Option<Player>>,
   cell: Coordinate,
-  player: Player,
   rowStep: number,
   columnStep: number,
+  belongsToRun: (cell: Coordinate) => boolean,
 ): ReadonlyArray<Coordinate> => [
   ...pipe(
-    collectFrom(board, cell, player, -rowStep, -columnStep),
+    collectFrom(cell, -rowStep, -columnStep, belongsToRun),
     Array.reverse,
   ),
   cell,
-  ...collectFrom(board, cell, player, rowStep, columnStep),
+  ...collectFrom(cell, rowStep, columnStep, belongsToRun),
 ]
 
 const scoringRowsForMove = (
   board: ReadonlyArray<Option.Option<Player>>,
+  scoredRows: ReadonlyArray<ScoredRow>,
   cell: Coordinate,
   player: Player,
   turnNumber: number,
@@ -166,11 +181,17 @@ const scoringRowsForMove = (
     directionVectors,
     Array.filterMap(vector => {
       const cells = contiguousRun(
-        board,
         cell,
-        player,
         vector.row,
         vector.column,
+        candidate =>
+          isPlayerAt(board, candidate, player) &&
+          !isPreviouslyScoredOnAxis(
+            scoredRows,
+            candidate,
+            player,
+            vector.direction,
+          ),
       )
 
       return cells.length === WIN_LENGTH
@@ -229,7 +250,13 @@ export const placeMark = (
   const player = state.currentPlayer
   const board = replaceCell(state.board, cell, Option.some(player))
   const turnNumber = state.moves.length + 1
-  const newRows = scoringRowsForMove(board, cell, player, turnNumber)
+  const newRows = scoringRowsForMove(
+    board,
+    state.scoredRows,
+    cell,
+    player,
+    turnNumber,
+  )
   const points = newRows.length
   const scores = Scores.make({
     X: state.scores.X + (player === 'X' ? points : 0),

@@ -210,9 +210,23 @@ const rules = (h: HtmlBuilder<Message>): Html =>
         [],
         [
           h.li([], ['Take turns writing X or O in any empty square.']),
-          h.li([], ['Make exactly four in a straight line to score 1 point.']),
+          h.li(
+            [],
+            [
+              'Make exactly four unscored marks in a straight line to score 1 point.',
+            ],
+          ),
           h.li([], ['One move can score across several directions.']),
-          h.li([], ['Five or more in one straight run earns no new point.']),
+          h.li(
+            [],
+            [
+              'Scored fours stay counted, and a fresh four can sit directly beside one.',
+            ],
+          ),
+          h.li(
+            [],
+            ['Five or more unscored marks in one straight run earns no point.'],
+          ),
           h.li([], ['Fill the page. The highest score wins.']),
         ],
       ),
